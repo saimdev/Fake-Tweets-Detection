@@ -1,15 +1,19 @@
 // requiring mongoose for database
 const mongoose = require("mongoose");
+//requiring dotenv
+const dotenv  = require('dotenv')
 // requiring express
 const express = require('express')
 // putting all express functions in constant app
 const app = express();
+dotenv.config({path:'./config.env'});
 
-const DB="mongodb+srv://sabbas486249:Raza5085458@cluster0.99oj3k2.mongodb.net/mlproject?retryWrites=true&w=majority"
+const DB=process.env.DATABASE;
+const port = process.env.PORT;
 
 mongoose.connect(DB).then(()=>{
   console.log("DB CONNECTED");
-}).catch((err)=>{console.log(err)})
+}).catch((err)=>{console.log("DATBASE NOT CONNECTED")})
 
 // middleware has one more parameter which is next like where
 // to go after we get responses
