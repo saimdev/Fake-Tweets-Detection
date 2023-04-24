@@ -1,3 +1,7 @@
+// requiring express
+const express = require('express')
+// putting all express functions in constant app
+const app = express();
 //reuquiring connection file
 require('./db/conn');
 // importing routers file
@@ -10,10 +14,7 @@ const User = require("./models/userSchema");
 const mongoose = require("mongoose");
 //requiring dotenv
 const dotenv  = require('dotenv')
-// requiring express
-const express = require('express')
-// putting all express functions in constant app
-const app = express();
+// configuring the path of dotenv file
 dotenv.config({path:'./config.env'});
 
 // middleware has one more parameter which is next like where
