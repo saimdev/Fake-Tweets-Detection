@@ -1,3 +1,9 @@
+//reuquiring connection file
+require('./db/conn');
+// defining port number from environment variable
+const PORT = process.env.PORT;
+// defining model variable
+const User = require("./models/userSchema");
 // requiring mongoose for database
 const mongoose = require("mongoose");
 //requiring dotenv
@@ -7,13 +13,6 @@ const express = require('express')
 // putting all express functions in constant app
 const app = express();
 dotenv.config({path:'./config.env'});
-
-const DB=process.env.DATABASE;
-const port = process.env.PORT;
-
-mongoose.connect(DB).then(()=>{
-  console.log("DB CONNECTED");
-}).catch((err)=>{console.log("DATBASE NOT CONNECTED")})
 
 // middleware has one more parameter which is next like where
 // to go after we get responses
@@ -35,8 +34,8 @@ app.get('/about', middleware, (req, res) => {
 })
 
 // now to visualize that response of server
-app.listen(3000, ()=>{
-    console.log("Server is running on port no. 3000");
+app.listen(PORT, ()=>{
+    console.log("Server is running on port no.", PORT);
 })
 
 // terminal print
