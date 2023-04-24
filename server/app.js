@@ -1,5 +1,7 @@
 //reuquiring connection file
 require('./db/conn');
+// importing routers file
+app.use(require('./routers/auth'));
 // defining port number from environment variable
 const PORT = process.env.PORT;
 // defining model variable
@@ -20,8 +22,6 @@ const middleware = (req, res, next)=>{
   console.log("Hello Middleware")
   next();
 }
-
-
 
 
 // on root directory, getting some response
