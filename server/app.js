@@ -2,6 +2,8 @@
 const express = require('express')
 // putting all express functions in constant app
 const app = express();
+// for using json format
+app.use(express.json());
 //reuquiring connection file
 require('./db/conn');
 // importing routers file
@@ -16,6 +18,7 @@ const mongoose = require("mongoose");
 const dotenv  = require('dotenv')
 // configuring the path of dotenv file
 dotenv.config({path:'./config.env'});
+
 
 // middleware has one more parameter which is next like where
 // to go after we get responses
