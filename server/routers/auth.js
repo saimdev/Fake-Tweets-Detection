@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require("../models/userSchema");
 
 router.get('/', (req, res)=>{
@@ -32,7 +33,7 @@ router.post('/register', (req,res)=>{
 
 router.post("/signin", (req, res)=>{
     const {email, password} = req.body;
-
+    let token;
     if(!email || !password){
         return res.status(422).json({error:"plzz fill missing fields"});
     }
@@ -41,6 +42,11 @@ router.post("/signin", (req, res)=>{
     .then((checkUser)=>{
         if(checkUser){
             if(password == checkUser.password){
+                checkUser.generateAuthToken()
+                .then((token)=>{
+                    console.log(token);
+                }).catch((err)=>{ console.log(err) });
+                
                 return res.status(200).json({message:"Succesfully logged in"});
             }
             else{
