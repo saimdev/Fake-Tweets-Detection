@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const bcrypt = require('bcrypt');
 const User = require("../models/userSchema");
 
 router.get('/', (req, res)=>{
@@ -39,9 +40,17 @@ router.post("/signin", (req, res)=>{
     User.findOne({email:email})
     .then((checkUser)=>{
         if(checkUser){
-            return res.status(201).json({message:"Logged in successfully"});
+            if(password == checkUser.password){
+                return res.status(200).json({message:"Succesfully logged in"});
+            }
+            else{
+                res.status(401).json({error: "Invalid Email or Password"});
+            }
         }
-        res.status(400).json({error:"User not found"});
+        else{
+            res.status(400).json({error:"User not found"});
+        }
+        
     }).catch((err)=>{ console.log(err) })
 });
 
