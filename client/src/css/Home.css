@@ -1,0 +1,28 @@
+.homebg{
+    width: 100%;
+}
+
+.homeupload, .fileupload{
+    width: 100%;
+}
+
+.fileupload{
+    color: white;
+}
+
+.fileupload::file-selector-button {
+    color: white;
+    padding: .2em .4em;
+    border: none;
+    border-radius: .2em;
+    background-color: black;
+    transition: 0.5s;
+}
+
+  .card-body>button{
+    border: none;
+    border-color: black;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+  }
+  

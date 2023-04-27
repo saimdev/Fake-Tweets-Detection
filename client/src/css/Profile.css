@@ -1,0 +1,21 @@
+.profile{
+  background-image: url('../assets/images/pagebg.jpeg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+
+input[type=text] {
+    padding: 0,25rem;
+    
+    outline:none !important;
+    box-shadow: none;
+}
+  
+  input[type=text]:focus{
+    outline: none !important;
+    box-shadow: none;
+    border: 1px solid lightgray;
+    border-radius: 0.5rem;
+  }

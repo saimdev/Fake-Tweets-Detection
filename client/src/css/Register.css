@@ -1,0 +1,17 @@
+.register{
+    background-image: url('../assets/images/pagebg.jpeg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+input{
+    outline: none !important;
+}
+
+input:focus{
+    outline: none !important;
+    box-shadow: none;
+    border: 1px solid lightgray;
+    border-radius: 0.5rem;
+}

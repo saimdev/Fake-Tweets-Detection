@@ -8,7 +8,7 @@ router.get('/', (req, res)=>{
     res.send("Hello from router server home page");
 });
 
-router.post('/register', (req,res)=>{
+router.post('/signup', (req,res)=>{
     const {username, email, password} = req.body;
     const reports=0;
     if(!username || !email || !password){
@@ -31,7 +31,7 @@ router.post('/register', (req,res)=>{
     console.log(req.body);
 });
 
-router.post("/signin", (req, res)=>{
+router.post("/login", (req, res)=>{
     const {email, password} = req.body;
     let token;
     if(!email || !password){
