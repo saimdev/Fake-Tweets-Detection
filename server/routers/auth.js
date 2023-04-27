@@ -45,6 +45,10 @@ router.post("/signin", (req, res)=>{
                 checkUser.generateAuthToken()
                 .then((token)=>{
                     console.log(token);
+                    res.cookie("authToken", token, {
+                        expires: new Date(Date.now() + 180000),
+                        httpOnly:true
+                    });
                 }).catch((err)=>{ console.log(err) });
                 
                 return res.status(200).json({message:"Succesfully logged in"});
