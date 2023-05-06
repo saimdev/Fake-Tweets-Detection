@@ -1,0 +1,17 @@
+.contactus{
+    background-image: url('../assets/images/pagebg.jpeg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.example{
+    background-color: black;
+    color: white;
+    transition: 0.5s;
+}
+
+.example:hover{
+    color:black;
+    background-color: white;
+}
