@@ -31,7 +31,7 @@ export function Register() {
                 "Content-Type":"application/json"
             },
             body: JSON.stringify({
-                name, email, password
+                username:name, email:email, password:password
             })
         });
 
