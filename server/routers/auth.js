@@ -45,13 +45,9 @@ router.post("/login", (req, res)=>{
                 checkUser.generateAuthToken()
                 .then((token)=>{
                     console.log(token);
-                    res.cookie("authToken", token, {
-                        expires: new Date(Date.now() + 180000),
-                        httpOnly:true
-                    });
+                    res.cookie("authToken", token);
+                    res.status(200).json({message:"Succesfully logged in"});
                 }).catch((err)=>{ console.log(err) });
-                
-                return res.status(200).json({message:"Succesfully logged in"});
             }
             else{
                 res.status(401).json({error: "Invalid Email or Password"});

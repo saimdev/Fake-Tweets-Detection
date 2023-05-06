@@ -24,10 +24,9 @@ export function Register() {
     const PostData = async (e)=>{
         e.preventDefault();
         const {name, email, password} = user;
-        const res = await fetch('/registration', {
+        const res = await fetch('/signup', {
             method:'POST',
             headers:{
-                "Accept":"application/json",
                 "Content-Type":"application/json"
             },
             body: JSON.stringify({
@@ -37,7 +36,7 @@ export function Register() {
 
         const data = await res.json();
 
-        if(data.status === 422 || !data){
+        if(data.error || !data){
             window.alert("Invalid Registration")
             console.log("Invalid Registration")
         }else{

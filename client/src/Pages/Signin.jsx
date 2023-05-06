@@ -21,18 +21,18 @@ export function Signin() {
     const loginUser = async (e)=>{
         e.preventDefault();
         const res = await fetch('/login', {
-            method:"POST",
+            method:'POST',
             headers:{
                 "Content-Type":"application/json"
             },
-            body:JSON.stringify(
-                email, password
-            )
-        })
-
-        const data = res.json();
-
-        if(data.status===400 || !data){
+            body: JSON.stringify({
+                email:email, password:password
+            })
+        });
+        
+        const data = await res.json();
+        console.log(data);
+        if(data.error || !data){
             window.alert("Invalid Credentials")
         }
         else{
