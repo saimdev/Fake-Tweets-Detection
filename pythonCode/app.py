@@ -1,19 +1,16 @@
-import logging
-from flask import Flask, request, jsonify
+import sys
 
-app = Flask(__name__)
+# Get the user input as an argument
+user_input = sys.argv[1]
 
-logging.basicConfig(level=logging.DEBUG)
+# Convert the user input to uppercase
+result = user_input.upper()
 
-def convert_to_uppercase(user_input):
-    return user_input.upper()
+# Print the result to stdout
+print(result)
 
-@app.route('/api/convert-to-uppercase', methods=['POST'])
-def convert_to_uppercase_view():
-    try:
-        user_input = request.json['userInput']
-        result = convert_to_uppercase(user_input)
-        return jsonify({'result': result})
-    except Exception as e:
-        logging.error(str(e))
-        return jsonify({'error': 'An error occurred'})
+
+
+
+
+

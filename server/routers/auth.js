@@ -1,5 +1,7 @@
 const express = require('express')
-const router = express.Router()
+const router = express.Router();
+const { PythonShell } = require('python-shell');
+const { spawn } = require('child_process');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require("../models/userSchema");
@@ -70,5 +72,32 @@ router.get('/about', authenticate, (req, res, next) => {
 router.get('/getData', authenticate, (req, res, next) => {
     res.send(req.currentUser);
   });
+
+
+
+  router.post('/uppercase', (req, res) => {
+    const userInput = req.body.userInput;
+  
+    const pythonProcess = spawn('python', ['../pythonCode/app.py', userInput]);
+  
+    pythonProcess.stdout.on('data', (data) => {
+      const result = data.toString().trim();
+      console.log(result);
+      res.json({ result });
+    });
+  
+    pythonProcess.stderr.on('data', (data) => {
+      console.error(`stderr: ${data}`);
+      res.status(500).json({ error: 'Internal server error' });
+    });
+  
+    pythonProcess.on('close', (code) => {
+      console.log(`child process exited with code ${code}`);
+    });
+  });
+  
+  
+
+
 
 module.exports = router;

@@ -15,7 +15,7 @@ export function Home(){
       const userInput = document.getElementById("user-input").value;
     console.log(userInput);
     try{
-        const response = await fetch("http://127.0.0.1:5000/api/convert-to-uppercase", {
+        const response = await fetch("/uppercase", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
