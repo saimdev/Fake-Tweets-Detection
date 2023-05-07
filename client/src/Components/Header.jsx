@@ -6,8 +6,10 @@ import ContactPhoneRoundedIcon from '@mui/icons-material/ContactPhoneRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded';
 import "../css/Header.css"
+import { useState } from "react";
 
 export function Header() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     return (
         <div className="header">
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -40,12 +42,21 @@ export function Header() {
                                     <AccountCircleRoundedIcon/>
                                 <em>Profile</em>
                             </Link>
-                            <Link to="/signin"
-                                className="nav-item nav-link mx-5 d-flex align-items-center">
-                                    <ExitToAppRoundedIcon/>
-                                
-                                <em>Signin</em>
-                            </Link>
+                            {isLoggedIn ?
+                                <Link to="/signout"
+                                    className="nav-item nav-link mx-5 d-flex align-items-center"
+                                    onClick={() => setIsLoggedIn(false)}>
+                                    <ExitToAppRoundedIcon />
+                                    <em>Signout</em>
+                                </Link>
+                                :
+                                <Link to="/signin"
+                                    className="nav-item nav-link mx-5 d-flex align-items-center">
+                                    <ExitToAppRoundedIcon />
+
+                                    <em>Signin</em>
+                                </Link>
+                            }
                         </div>
                     </div>
                 </div>

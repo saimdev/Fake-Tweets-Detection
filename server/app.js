@@ -1,7 +1,10 @@
 // requiring express
 const express = require('express')
 // putting all express functions in constant app
+const cookieParser = require('cookie-parser');
+
 const app = express();
+app.use(cookieParser());
 // for using json format
 app.use(express.json());
 //reuquiring connection file
