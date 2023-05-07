@@ -21,7 +21,6 @@ export function Signin() {
     const loginUser = async (e)=>{
         e.preventDefault();
         const res = await fetch('/login', {
-<<<<<<< HEAD
             method:'POST',
             headers:{
                 "Content-Type":"application/json"
@@ -33,21 +32,8 @@ export function Signin() {
         
         const data = await res.json();
         console.log(data);
-        if(data.error || !data){
-=======
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify(
-                email, password
-            )
-        })
-
-        const data = res.json();
 
         if(data.status===400 || !data){
->>>>>>> bba0265ba5ae2ef999c33a83ab953feac4cbf147
             window.alert("Invalid Credentials")
         }
         else{

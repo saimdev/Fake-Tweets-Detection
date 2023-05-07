@@ -2,8 +2,41 @@ import "../css/Profile.css"
 import { Header } from "../Components/Header";
 import { Footer } from "../Components/Footer"
 import profile from "../assets/images/profile.jpg"
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function Profile() {
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      callProfileRoute();
+      
+    }, []);
+
+    const callProfileRoute = async()=>{
+        try{
+            const res = await fetch('/about', {
+                method:'GET',
+                headers:{
+                    "Accept":"application/json",
+                    "Content-Type":"application/json"
+                },
+                credentials:"include"
+            })
+
+            const data = await res.json();
+
+            if (!data || data.error){
+                navigate('/signin');
+            }
+
+        }catch(err){
+            console.log(err)
+        }
+    }
+    
+
     return (
         <div className="profile">
             <Header />

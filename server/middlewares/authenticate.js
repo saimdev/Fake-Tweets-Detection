@@ -4,6 +4,10 @@ const User = require("../models/userSchema");
 const Authenticate = async (req, res, next)=>{
     try {
         // getting token from cookies
+        if (!req.cookies || !req.cookies.authToken) {
+            return res.status(401).json({ error: 'Authentication failed' });
+        }
+        
         const token = req.cookies.authToken;
         // verifying token by comparing with secrete key, and in this variablewe get all details of user with
         // that token
@@ -26,6 +30,6 @@ const Authenticate = async (req, res, next)=>{
     } catch (error) {
         console.log(error)
     }
-
-    module.exports = Authenticate;
 }
+
+module.exports = Authenticate;
