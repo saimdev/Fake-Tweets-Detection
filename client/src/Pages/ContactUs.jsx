@@ -1,8 +1,37 @@
 import "../css/Contactus.css"
 import { Header } from "../Components/Header";
 import {Footer} from "../Components/Footer"
+import { useEffect, useState } from "react";
 
 export function ContactUs(){
+
+    const [userData, setUserData]=useState('');
+
+    const contactUsPage = async ()=>{
+        try {
+            const res = await fetch('/getData', {
+                method:'GET',
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            });
+
+            const data =  await res.json();
+            setUserData(data);
+            if(!data || data.error){
+                const error = new Error(data.error);
+                throw error;
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+      contactUsPage();
+    }, [])
+    
+
     return(
         <div className="contactus">
             <Header/>
@@ -15,11 +44,11 @@ export function ContactUs(){
                     <form>
                         <div class="mb-3">
                             <label for="exampleInputText" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="exampleInputText" aria-describedby="emailHelp"/>
+                            <input type="text" class="form-control" id="exampleInputText" aria-describedby="emailHelp"  value={userData.username}/>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={userData.email}/>
                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
                         <div class="mb-3">

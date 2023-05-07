@@ -53,7 +53,6 @@ export function Header() {
                                 <Link to="/signin"
                                     className="nav-item nav-link mx-5 d-flex align-items-center">
                                     <ExitToAppRoundedIcon />
-
                                     <em>Signin</em>
                                 </Link>
                             }

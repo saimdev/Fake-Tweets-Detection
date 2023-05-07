@@ -67,4 +67,8 @@ router.get('/about', authenticate, (req, res, next) => {
   res.send(req.currentUser);
 });
 
+router.get('/getData', authenticate, (req, res, next) => {
+    res.send(req.currentUser);
+  });
+
 module.exports = router;
