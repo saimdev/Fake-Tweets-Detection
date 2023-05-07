@@ -37,7 +37,7 @@ export function Register() {
         const data = await res.json();
 
         if(data.error || !data){
-            window.alert("Invalid Registration")
+            window.alert(data.error);
             console.log("Invalid Registration")
         }else{
             window.alert("Successfully Registered");

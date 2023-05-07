@@ -3,6 +3,7 @@ const router = express.Router()
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require("../models/userSchema");
+const authenticate = require("../middlewares/authenticate");
 
 router.get('/', (req, res)=>{
     res.send("Hello from router server home page");
@@ -59,5 +60,9 @@ router.post("/login", (req, res)=>{
         
     }).catch((err)=>{ console.log(err) })
 });
+
+app.get('/about', authenticate, (req, res) => {
+  res.send('GET request to the homepage')
+})
 
 module.exports = router;
