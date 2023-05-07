@@ -4,9 +4,13 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require("../models/userSchema");
 <<<<<<< HEAD
+<<<<<<< HEAD
 const authenticate = require("../middlewares/authenticate");
 =======
 >>>>>>> bba0265ba5ae2ef999c33a83ab953feac4cbf147
+=======
+const authenticate = require("../middlewares/authenticate");
+>>>>>>> 373cd01 (Authentication Middleware)
 
 router.get('/', (req, res)=>{
     res.send("Hello from router server home page");
@@ -75,10 +79,16 @@ router.post("/login", (req, res)=>{
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 373cd01 (Authentication Middleware)
 app.get('/about', authenticate, (req, res) => {
   res.send('GET request to the homepage')
 })
 
+<<<<<<< HEAD
 =======
 >>>>>>> bba0265ba5ae2ef999c33a83ab953feac4cbf147
+=======
+>>>>>>> 373cd01 (Authentication Middleware)
 module.exports = router;

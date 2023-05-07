@@ -50,10 +50,13 @@ export function Register() {
 <<<<<<< HEAD
         if(data.error || !data){
             window.alert(data.error);
+<<<<<<< HEAD
 =======
         if(data.status === 422 || !data){
             window.alert("Invalid Registration")
 >>>>>>> bba0265ba5ae2ef999c33a83ab953feac4cbf147
+=======
+>>>>>>> 373cd01 (Authentication Middleware)
             console.log("Invalid Registration")
         }else{
             window.alert("Successfully Registered");
