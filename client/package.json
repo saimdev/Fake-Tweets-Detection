@@ -2,7 +2,11 @@
   "name": "first-web",
   "version": "0.1.0",
   "private": true,
+<<<<<<< HEAD
   "proxy":"http://localhost:5000",
+=======
+  "proxy":"http://l27.0.0.1:5000",
+>>>>>>> bba0265ba5ae2ef999c33a83ab953feac4cbf147
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
