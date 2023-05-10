@@ -33,8 +33,8 @@ export function Signin() {
         const data = await res.json();
         console.log(data);
 
-        if(data.status===400 || !data){
-            window.alert("Invalid Credentials")
+        if(data.error || !data){
+            window.alert(data.error)
         }
         else{
             window.alert("Successfully Logged IN");

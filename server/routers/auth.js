@@ -61,7 +61,7 @@ router.post("/login", (req, res)=>{
             res.status(400).json({error:"User not found"});
         }
         
-    }).catch((err)=>{ console.log(err) })
+    }).catch((err)=>{ res.status(500).json({error:"Server Side Error"}) });
 });
 
 
