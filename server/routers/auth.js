@@ -5,6 +5,7 @@ const { spawn } = require('child_process');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require("../models/userSchema");
+const Report = require("../models/reportSchema");
 
 const authenticate = require("../middlewares/authenticate");
 
@@ -72,6 +73,21 @@ router.get('/about', authenticate, (req, res, next) => {
 router.get('/getData', authenticate, (req, res, next) => {
     res.send(req.currentUser);
   });
+
+router.get('/getReports', authenticate, async (req, res, next) => {
+    console.log(req.userId);
+    try {
+        Report.find({ userId: req.userId }).
+        then((reports)=>{
+            if(reports){
+                return res.status(200).json(reports);  
+            }
+        }).catch((err)=>{ res.status(500).json({error:"User not found"}); })
+        
+      } catch (err) {
+        res.status(500).json({ error: err });
+      }
+});
 
 
 

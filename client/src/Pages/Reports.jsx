@@ -1,8 +1,34 @@
 import "../css/Reports.css"
+import { useState, useEffect } from "react";
 import { Header } from "../Components/Header";
-import {Footer} from "../Components/Footer"
+import {Footer} from "../Components/Footer";
+import {ReportsTable} from "../Components/ReportsTable";
+import { useNavigate } from "react-router-dom";
 
 export function Reports(){
+    const [reports, setReports]=useState([]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      getReports();
+    }, [])
+
+    const getReports = async ()=>{
+        const res = await fetch('/getReports', {
+            method:'GET',
+            headers:{
+                "Content-Type":"applicatio/json"
+            }
+        });
+
+        const data= await res.json();
+        if(!data || data.error){
+            navigate('/signin')
+        }
+        setReports(data);
+    }
+    
+
     return(
         <div className="reports">
             <Header/>
@@ -12,72 +38,7 @@ export function Reports(){
             <div className="d-flex flex-row justify-content-center my-5">
                 <div className="card w-75" style={{width: "18rem"}}>
                     <div className="card-body" style={{height: "400px", overflowY: "auto"}}>
-                    <table className="w-100" >
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>1. Imran Khan Tweet</td>
-                            <td>Real</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>2. Blog about React Js</td>
-                            <td>Real</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>3. News about elections 2023</td>
-                            <td>Fake</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>4. Vacations News in Comsats University</td>
-                            <td>Real</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>1. Imran Khan Tweet</td>
-                            <td>Real</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>2. Blog about React Js</td>
-                            <td>Real</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>3. News about elections 2023</td>
-                            <td>Fake</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>4. Vacations News in Comsats University</td>
-                            <td>Real</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>1. Imran Khan Tweet</td>
-                            <td>Real</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>2. Blog about React Js</td>
-                            <td>Real</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>3. News about elections 2023</td>
-                            <td>Fake</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>4. Vacations News in Comsats University</td>
-                            <td>Real</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>1. Imran Khan Tweet</td>
-                            <td>Real</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>2. Blog about React Js</td>
-                            <td>Real</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>3. News about elections 2023</td>
-                            <td>Fake</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>4. Vacations News in Comsats University</td>
-                            <td>Real</td>
-                        </tr>
-                    </table>
+                        <ReportsTable reports={reports}/>
                     </div>
                 </div>
             </div>
