@@ -25,6 +25,13 @@ export function Reports(){
         if(!data || data.error){
             navigate('/signin')
         }
+        else if(data.not){
+            reports={
+                userId:"N.A",
+                name:"N.A",
+                result:"N.A"
+            }
+        }
         setReports(data);
     }
     

@@ -30,7 +30,7 @@ router.post('/signup', (req,res)=>{
         const newUser = new User({username, email, password, reports});
 
         newUser.save().then(()=>{
-            res.status(201).json({message:"Successfully registered"})
+        res.status(201).json({message:"Successfully registered"})
         }).catch((err)=>{ res.status(500).json({error:"User not registered" })});
         
     }).catch((err)=>{console.log(err);})
@@ -75,17 +75,21 @@ router.get('/getData', authenticate, (req, res, next) => {
   });
 
 router.get('/getReports', authenticate, async (req, res, next) => {
-    console.log(req.userId);
+
     try {
-        Report.find({ userId: req.userId }).
+        Report.findOne({ userId: req.userId }).
         then((reports)=>{
             if(reports){
                 return res.status(200).json(reports);  
             }
-        }).catch((err)=>{ res.status(500).json({error:"User not found"}); })
+            else{
+                res.status(400).json({error:"User not found"});
+            }
+            
+        }).catch((err)=>{ res.status(400).json({not: "User Not found"}) })
         
       } catch (err) {
-        res.status(500).json({ error: err });
+        res.status(500).json({ errors: err });
       }
 });
 
