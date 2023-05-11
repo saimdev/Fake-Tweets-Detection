@@ -76,9 +76,8 @@ export function ContactUs(){
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Email address</label>
                             <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" value={formData.email} onChange={handleChange}/>
-                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
-                        <button type="submit" onClick={handleSubmit} class="btn" style={{background: "black", color: "white"}}>Submit</button>
+                        <button type="submit" onClick={handleSubmit} class="btn" style={{background: "black", color: "white"}}>Subscribe</button>
                     </form>
                     </div>
                 </div>
