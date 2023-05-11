@@ -34,7 +34,7 @@ export function Header() {
                             <Link to="/contact"
                                 className="nav-item nav-link mx-5 d-flex align-items-center">
                                     <ContactPhoneRoundedIcon/>
-                                <em>Contact Us</em>
+                                <em>Subscribe</em>
                             </Link>
 
                             <Link to="/profile"

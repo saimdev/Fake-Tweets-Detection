@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const User = require("../models/userSchema");
 const Report = require("../models/reportSchema");
 const mongoose = require('mongoose');
+const nodemailer = require('nodemailer');
 
 const authenticate = require("../middlewares/authenticate");
 
@@ -93,11 +94,43 @@ router.get('/getReports', authenticate,  (req, res, next) => {
 });
 
 
+router.post('/sendmail', async (req, res)=>{
+  try {
+    const {name, email} = req.body;
+    console.log(email);
+     // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: 'sabbas486249@gmail.com', // your Gmail account username
+        pass: process.env.GMAIL_PASS, // your Gmail account password
+      },
+    });
+console.log(email);
+        // send mail with defined transport object
+        let info = await transporter.sendMail({
+          from: `"FAKE NEWS DETECTION SYSTEM" <sabbas486249@gmail.com>`, // sender address
+          to: email, // list of receivers
+          subject: 'FAKE NEWS DETECTION', // Subject line
+          html: '<h1>Thanks for subscription!</h1><p>Thank you for subscribing to our fake news detection system. Stay informed and protected from misinformation with our service.</p>'
+        });
+
+        console.log('Message sent: %s', info.messageId);
+        res.status(200).json({ message: 'Email sent successfully' });
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({error:"Internal Server Error"})
+  }
+})
+
 
   router.post('/uppercase', (req, res) => {
     const userInput = req.body.userInput;
   
-    const pythonProcess = spawn('python', ['../pythonCode/app.py', userInput]);
+    const pythonProcess = spawn('python', ['../pythonCode/mlcode.py', userInput]);
   
     pythonProcess.stdout.on('data', (data) => {
       const result = data.toString().trim();

@@ -5,7 +5,31 @@ import { useEffect, useState } from "react";
 
 export function ContactUs(){
 
-    const [userData, setUserData]=useState('');
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+      });
+
+      const { name, email} = formData;
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const res = await fetch('/sendmail', {
+            method:'POST',
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify({ name, email })
+          });
+          const data = await res.json();
+          console.log(data);
+          alert('Email sent successfully!');
+          setFormData({ username: '', email: '' });
+        } catch (err) {
+          console.error(err);
+          alert('Internal server error. Please try again later.');
+        }
+      };
 
     const contactUsPage = async ()=>{
         try {
@@ -17,7 +41,7 @@ export function ContactUs(){
             });
 
             const data =  await res.json();
-            setUserData(data);
+            setFormData(data);
             if(!data || data.error){
                 const error = new Error(data.error);
                 throw error;
@@ -26,6 +50,9 @@ export function ContactUs(){
             console.log(error)
         }
     }
+
+    const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
     useEffect(() => {
       contactUsPage();
@@ -36,7 +63,7 @@ export function ContactUs(){
         <div className="contactus">
             <Header/>
             <div className="d-flex justify-content-center">
-            <h1 className="h1 fw-bolder d-flex justify-content-center p-2 my-4" style={{backdropFilter: "blur(10px)", fontSize: "3rem", borderRadius: "1rem"}}>Contact Us</h1>
+            <h1 className="h1 fw-bolder d-flex justify-content-center p-2 my-4" style={{backdropFilter: "blur(10px)", fontSize: "3rem", borderRadius: "1rem"}}>Subscribe</h1>
             </div>
             <div className="d-flex flex-row justify-content-center my-5">
                 <div className="card w-75" style={{width: "18rem"}}>
@@ -44,18 +71,14 @@ export function ContactUs(){
                     <form>
                         <div class="mb-3">
                             <label for="exampleInputText" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="exampleInputText" aria-describedby="emailHelp"  value={userData.username}/>
+                            <input type="text" class="form-control" id="exampleInputText" name="name" aria-describedby="emailHelp"  value={formData.username} onChange={handleChange}/>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={userData.email}/>
+                            <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" value={formData.email} onChange={handleChange}/>
                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">Message</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="btn" style={{background: "black", color: "white"}}>Submit</button>
+                        <button type="submit" onClick={handleSubmit} class="btn" style={{background: "black", color: "white"}}>Submit</button>
                     </form>
                     </div>
                 </div>
