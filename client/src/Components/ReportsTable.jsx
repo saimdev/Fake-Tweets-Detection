@@ -11,10 +11,10 @@ export function ReportsTable({ reports }) {
         </tr>
       </thead>
       <tbody>
-        {reports.map((report) => {
+        {reports.map((report, index) => {
           return (
             <tr key={report.id}>
-              <td>{report.id}</td>
+              <td>{index+1}</td>
               <td>{report.name}</td>
               <td>{report.result}</td>
             </tr>

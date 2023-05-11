@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const reportSchema = new mongoose.Schema({
     userId:{
-        type:Number,
+        type:String,
         required:true
     },
     name:{

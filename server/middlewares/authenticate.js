@@ -11,7 +11,7 @@ const User = require("../models/userSchema");
 const Authenticate = async (req, res, next)=>{
     try {
         const authToken = req.cookies.authToken || req.headers.authorization;
-
+        
         if (!authToken) {
           return res.status(401).json({ error: "Authentication failed" });
         }

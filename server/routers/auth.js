@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require("../models/userSchema");
 const Report = require("../models/reportSchema");
+const mongoose = require('mongoose');
 
 const authenticate = require("../middlewares/authenticate");
 
@@ -74,23 +75,21 @@ router.get('/getData', authenticate, (req, res, next) => {
     res.send(req.currentUser);
   });
 
-router.get('/getReports', authenticate, async (req, res, next) => {
+router.get('/getReports', authenticate,  (req, res, next) => {
+    console.log(req.userId);
 
-    try {
-        Report.findOne({ userId: req.userId }).
-        then((reports)=>{
-            if(reports){
-                return res.status(200).json(reports);  
-            }
-            else{
-                res.status(400).json({error:"User not found"});
-            }
-            
-        }).catch((err)=>{ res.status(400).json({not: "User Not found"}) })
-        
-      } catch (err) {
-        res.status(500).json({ errors: err });
-      }
+    Report.find({ userId: req.userId}).then((reports)=>{
+        console.log("Reports:",reports);
+        if(reports){
+            return res.status(200).json(reports);  
+        } else {
+            return res.status(404).json({error:"No reports found for user"});
+        }
+    }).catch((err)=>{
+        res.status(500).json({error:"Internal server error"});
+    });
+    
+    
 });
 
 
@@ -116,6 +115,31 @@ router.get('/getReports', authenticate, async (req, res, next) => {
     });
   });
   
+
+  const addReport = async (req, res) => {
+    try {
+      const { userId, name, result } = req.body;
+  
+      // Create a new report document
+      const report = new Report({
+        userId: userId,
+        name: name,
+        result: result,
+      });
+  
+      // Save the report to the database
+      await report.save();
+  
+      // Return the newly created report
+      res.status(201).json(report);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  };
+
+  router.post("/addreport", addReport);
+
   
 
 
