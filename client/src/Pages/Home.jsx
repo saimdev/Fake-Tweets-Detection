@@ -28,36 +28,7 @@ export function Home(){
           setResult(responseData.result);
     }catch(err){console.log(err)};
       
-    }
-
-    // const handlePdfSubmit = async () => {
-    //     const name = document.getElementById("pdfName").value;
-    //     const file = document.querySelector('input[type="file"]').files[0];
-    //     const formData = new FormData();
-    //     formData.append("name", name);
-    //     formData.append("file", file);
-      
-    //     try {
-    //       const response = await axios.post("http://localhost:8000/process_pdf", formData);
-    //       setResult(response.data);
-    //     } catch (error) {
-    //       console.error(error);
-    //     }
-    //   };
-      
-      const handleTextSubmit = async () => {
-        const name = document.getElementById("textName").value;
-        const text = document.getElementById("text").value;
-        const data = { name: name, text: text };
-      
-        try {
-          const response = await axios.post("http://localhost:8000/process_text", data);
-          setResult(response.data);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      
+    }      
 
     return(
         <div className="homepage">
