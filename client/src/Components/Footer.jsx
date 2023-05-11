@@ -65,7 +65,7 @@ export function Footer() {
                         <a href="#!" className="text-reset">How to Use</a>
                     </p>
                     <p>
-                        <a href="#!" className="text-reset">Contact Us</a>
+                        <a href="#!" className="text-reset">Subscribe</a>
                     </p>
                     <p>
                         <a href="#!" className="text-reset">Profile</a>
