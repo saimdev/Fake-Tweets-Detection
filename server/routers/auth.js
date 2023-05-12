@@ -93,6 +93,21 @@ router.get('/getReports', authenticate,  (req, res, next) => {
     
 });
 
+router.get('/getLastReports',authenticate,(req,res)=>{
+  console.log(req.userId)
+
+  Report.find({userId: req.userId}).limit(4).then((reports)=>{
+      console.log("Reports:",reports)
+      if(reports.length <= 4){
+          return res.status(200).json(reports);
+      }else{
+          return res.status(404).json({error:"No reports found"})
+      }
+  }).catch((err)=>{
+      res.status(500).json({error:"Internal server error"});
+  })
+})
+
 
 router.post('/sendmail', async (req, res)=>{
   try {

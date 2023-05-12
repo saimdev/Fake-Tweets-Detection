@@ -2,12 +2,32 @@ import { Header } from "../Components/Header";
 import {Footer} from "../Components/Footer"
 import bg from "../assets/images/Homebg.png"
 import "../css/Home.css"
-import { useState } from "react";
+import {SearchDetails} from "../Components/SearchDetails"
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export function Home(){
 
     const [result, setResult] = useState("");
+    const [reports, setReports] = useState([]);
+
+    useEffect(() => {
+        getLastReports();
+    }, [])
+
+    const getLastReports = async () => {
+        const res = await fetch('/getLastReports', {
+            method: 'GET',
+            headers: {
+                "Content-Type": "applicatio/json"
+            }
+        })
+        const data = await res.json();
+        if (!data || data.error) {
+            console.log(data.error)
+        }
+        setReports(data);
+    }
 
     async function handleSubmit(event) {
       event.preventDefault();
@@ -68,24 +88,12 @@ export function Home(){
             <div className="mx-4 my-5 py-3 px-4" style={{border: "1px solid lightgray", borderRadius: "0.5rem"}}>
                 <h3 className="h3">Last Search Details:</h3>
                 <div className="d-flex flex-column">
-                    <table>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>1. Imran Khan Tweet</td>
-                            <td>Real</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>2. Blog about React Js</td>
-                            <td>Real</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>3. News about elections 2023</td>
-                            <td>Fake</td>
-                        </tr>
-                        <tr style={{borderBottom: "1px solid lightgray"}}>
-                            <td>4. Vacations News in Comsats University</td>
-                            <td>Real</td>
-                        </tr>
-                    </table>
+                {reports.length ? (
+                    <SearchDetails reports={reports}/>
+                ) : (
+                    <p>No search details available.</p>
+                )}
+
                 </div>
             </div>
             <Footer/>
