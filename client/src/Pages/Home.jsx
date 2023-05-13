@@ -97,7 +97,7 @@ export function Home(){
                     <div className="spinner-border" role="status">
                     <span className="visually-hidden">Loading...</span>
                     </div>
-                    <p className="mx-1 my-1">Please wait... it will take sometime</p>
+                    <p className="mx-1 my-1">Please wait.... it will take sometime</p>
                 </div>
                 ):(
                     <span className="visually-hidden">Loading...</span>
