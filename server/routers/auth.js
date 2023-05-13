@@ -142,32 +142,44 @@ console.log(email);
 })
 
 
-  router.post('/uppercase', (req, res) => {
-    const userInput = req.body.userInput;
-  
-    const pythonProcess = spawn('python', ['../pythonCode/i21_2083/ml.py', userInput]);
-  
-    pythonProcess.stdout.on('data', (data) => {
-      const result = data.toString().trim();
-      console.log(result);
-      res.json({ result });
-    });
-  
-    pythonProcess.stderr.on('data', (data) => {
-      console.error(`stderr: ${data}`);
-      res.status(500).json({ error: 'Internal server error' });
-    });
-  
-    pythonProcess.on('close', (code) => {
-      console.log(`child process exited with code ${code}`);
-    });
+  router.post('/getResult', authenticate, (req, res, next) => {
+      console.log("saim")
+      const {name, userInput}=req.body;
+      if(!name || !userInput){
+        res.status(422).json({error:"Please Fill missing fields"});
+      }
+      console.log(name);
+      console.log(userInput);
+      const pythonProcess = spawn('python', ['../pythonCode/i21_2083/ml.py', userInput]);
+    
+      pythonProcess.stdout.on('data', async (data) => {
+        const result = data.toString().trim();
+        console.log(result);
+        res.json({ result });
+        const report = new Report({
+          userId: req.userId,
+          name: name,
+          result: result,
+        });
+    
+        // Save the report to the database
+        await report.save();
+      });
+    
+      pythonProcess.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+        res.status(500).json({ error: 'Internal server error' });
+      });
+    
+      pythonProcess.on('close', (code) => {
+        console.log(`child process exited with code ${code}`);
+      });
+    
   });
   
 
-  const addReport = async (req, res) => {
+  const addReport = async (userId, name, result) => {
     try {
-      const { userId, name, result } = req.body;
-  
       // Create a new report document
       const report = new Report({
         userId: userId,
@@ -186,7 +198,6 @@ console.log(email);
     }
   };
 
-  router.post("/addreport", addReport);
 
   
 

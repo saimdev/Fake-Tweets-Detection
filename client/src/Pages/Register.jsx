@@ -40,6 +40,7 @@ export function Register() {
 
         if(data.error || !data){
             window.alert(data.error);
+            window.location.reload();
         }else{
             window.alert("Successfully Registered");
             console.log("Successfully Registered")

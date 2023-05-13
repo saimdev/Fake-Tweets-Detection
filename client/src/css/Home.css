@@ -6,6 +6,19 @@
     width: 100%;
 }
 
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5vh;
+  }
+  
+  .spinner-border {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+
 .fileupload{
     color: white;
 }

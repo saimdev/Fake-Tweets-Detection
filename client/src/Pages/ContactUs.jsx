@@ -45,6 +45,7 @@ export function ContactUs(){
             if(!data || data.error){
                 const error = new Error(data.error);
                 throw error;
+                window.location.reload();
             }
         } catch (error) {
             console.log(error)

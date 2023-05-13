@@ -35,6 +35,7 @@ export function Signin() {
 
         if(data.error || !data){
             window.alert(data.error)
+            window.location.reload();
         }
         else{
             window.alert("Successfully Logged IN");
