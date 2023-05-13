@@ -145,7 +145,7 @@ console.log(email);
   router.post('/uppercase', (req, res) => {
     const userInput = req.body.userInput;
   
-    const pythonProcess = spawn('python', ['../pythonCode/mlcode.py', userInput]);
+    const pythonProcess = spawn('python', ['../pythonCode/i21_2083/ml.py', userInput]);
   
     pythonProcess.stdout.on('data', (data) => {
       const result = data.toString().trim();
