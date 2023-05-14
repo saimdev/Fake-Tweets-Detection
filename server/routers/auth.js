@@ -179,7 +179,12 @@ console.log(email);
           name: name,
           result: result,
         });
-    
+
+        //increment in reports of user
+        const user = await User.findById(req.userId);
+        user.reports += 1;
+        
+        await user.save();
         // Save the report to the database
         await report.save();
       });
@@ -195,26 +200,6 @@ console.log(email);
     
   });
   
-
-  const addReport = async (userId, name, result) => {
-    try {
-      // Create a new report document
-      const report = new Report({
-        userId: userId,
-        name: name,
-        result: result,
-      });
-  
-      // Save the report to the database
-      await report.save();
-  
-      // Return the newly created report
-      res.status(201).json(report);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal server error" });
-    }
-  };
 
 
   
