@@ -6,7 +6,8 @@ const bodyParser = require('body-parser');
 
 const app = express();
 app.use(cookieParser());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 // for using json format
 app.use(express.json());
 //reuquiring connection file
@@ -47,5 +48,3 @@ app.listen(PORT, ()=>{
     console.log("Server is running on port no.", PORT);
 })
 
-// terminal print
-console.log("Revision of MERN")

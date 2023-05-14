@@ -2,12 +2,14 @@ const express = require('express')
 const router = express.Router();
 const { PythonShell } = require('python-shell');
 const { spawn } = require('child_process');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require("../models/userSchema");
 const Report = require("../models/reportSchema");
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
 const authenticate = require("../middlewares/authenticate");
 
@@ -16,7 +18,17 @@ router.get('/', (req, res)=>{
     res.send("Hello from router server home page");
 });
 
-router.post('/signup', (req,res)=>{
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+      cb(null, '../client/src/imgs');
+  },
+  filename: function(req, file, cb) {
+      cb(null, req.body.username + '.jpeg');
+  }
+});
+const upload = multer({ storage: storage });
+
+router.post('/signup', upload.single('image'), (req,res)=>{
     const {username, email, password} = req.body;
     const reports=0;
     if(!username || !email || !password){
@@ -70,6 +82,12 @@ router.post("/login", (req, res)=>{
 
 router.get('/about', authenticate, (req, res, next) => {
   res.send(req.currentUser);
+});
+
+router.get('/profile-img/:username', (req, res)=>{
+  const username = req.params.username;
+  const imagePath = path.join(__dirname,'..', '..','client', 'src', 'imgs', `${username}.jpeg`);
+  res.sendFile(imagePath);
 });
 
 router.get('/getData', authenticate, (req, res, next) => {

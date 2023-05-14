@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 export function Register() {
 
     const navigate = useNavigate();
+    const [image, setImage]=useState(null);
 
     // const history = useHistory();
 
@@ -20,19 +21,20 @@ export function Register() {
         value = e.target.value;
         setUser({...user, [name]:value});
     }
-
+    
+    
     const PostData = async (e)=>{
         e.preventDefault();
         const {name, email, password} = user;
-
+        const formData = new FormData();
+        formData.append("username", name);
+        formData.append("email", email);
+        formData.append("password", password);
+        formData.append("image", image);
+        console.log(image);
         const res = await fetch('/signup', {
             method:'POST',
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body: JSON.stringify({
-                username:name, email:email, password:password
-        })
+            body: formData
         })
 
         const data = await res.json();
@@ -57,7 +59,7 @@ export function Register() {
             <div className="d-flex flex-row justify-content-center my-5">
                 <div className="card w-50 py-2 px-3" style={{ width: "18rem" }}>
                     <div className="card-body">
-                        <form method="POST">
+                        <form method="POST" encType="multipart/form-data">
                             <div className="mb-3">
                                 <label htmlFor="exampleInputText" className="form-label">Name</label>
                                 <input type="text" name="name" className="form-control" id="exampleInputText" aria-describedby="emailHelp" 
@@ -74,7 +76,7 @@ export function Register() {
                             </div>
                             <div className="mb-3">
                             <label htmlFor="exampleInputEmail1" className="form-label">Profile picture</label>
-                                <input name="image" type="file" className="form-control bg-transparent p-2  rounded-2" id="exampleInputPassword1" />
+                                <input name="image" onChange={(e)=>setImage(e.target.files[0])} accept="image/*" type="file" className="form-control bg-transparent p-2  rounded-2" id="exampleInputPassword1" />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="exampleInputEmail1" className="form-label">Password</label>

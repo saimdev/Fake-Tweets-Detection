@@ -1,13 +1,13 @@
 import "../css/Profile.css"
 import { Header } from "../Components/Header";
 import { Footer } from "../Components/Footer"
-import profile from "../assets/images/profile.jpg"
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function Profile() {
 
     const [userData, setUserData]=useState('');
+    const [imageSrc, setImageSrc] = useState('');
 
     const navigate = useNavigate();
 
@@ -29,12 +29,15 @@ export function Profile() {
             })
 
             const data = await res.json();
-            console.log(data);
-            setUserData(data);
             if (!data || data.error){
                 navigate('/signin');
             }
 
+            console.log(data);
+            setUserData(data);
+            const imageResponse = await fetch(`/profile-img/${data.username}`);
+            setImageSrc(URL.createObjectURL(await imageResponse.blob()));
+            
         }catch(err){
             console.log(err)
         }
@@ -50,7 +53,7 @@ export function Profile() {
             <div className="d-flex flex-row justify-content-center my-5">
             <div className="card w-75" style={{ width: "18rem" }}>
                 <div className=" d-flex flex-column align-items-center p-3">
-                    <img src={profile} alt="" style={{ borderRadius: "100px", width: "200px" }} />
+                    <img src={imageSrc} alt="" style={{ borderRadius: "100px", width: "200px" }} />
 
                 </div>
                 <div className="d-flex justify-content-center" >
