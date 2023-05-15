@@ -8,15 +8,15 @@ export function Home(){
 
     const [result, setResult] = useState("");
     const [reports, setReports] = useState([]);
-    const [loading, setLoading] = useState(true);
-
+    const [loading, setLoading] = useState(false);
+    const [loadingReports, setLoadingReports] = useState(false);
 
     useEffect(() => {
         getLastReports();
     }, [])
 
     const getLastReports = async () => {
-        setLoading(true);
+        setLoadingReports(true);
         try {
             const res = await fetch('/getLastReports', {
                 method: 'GET',
@@ -32,7 +32,7 @@ export function Home(){
         } catch (error) {
             console.log(error)
         }finally {
-            setLoading(false);
+            setLoadingReports(false);
           }
     }
 
@@ -114,11 +114,22 @@ export function Home(){
             <div className="mx-4 my-5 py-3 px-4" style={{border: "1px solid lightgray", borderRadius: "0.5rem"}}>
                 <h3 className="h3">Last Search Details:</h3>
                 <div className="d-flex flex-column">
-                {reports.length ? (
-                    <SearchDetails reports={reports}/>
-                ) : (
-                    <p>No search details available.</p>
-                )}
+                {loadingReports ? (
+                <div className="loader">
+                    <div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                    </div>
+                    <p className="mx-1 my-1">Please wait.... loading reports</p>
+                </div>
+                ):(
+                    reports.length ? (
+                        <SearchDetails reports={reports}/>
+                    ) : (
+                        <p>No search details available.</p>
+                    )
+                )
+            }
+                
 
                 </div>
             </div>

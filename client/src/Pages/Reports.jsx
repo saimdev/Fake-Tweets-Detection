@@ -8,12 +8,14 @@ import { useNavigate } from "react-router-dom";
 export function Reports(){
     const [reports, setReports]=useState([]);
     const navigate = useNavigate();
+    const[loading, setLoading]=useState(false);
 
     useEffect(() => {
       getReports();
     }, [])
 
     const getReports = async ()=>{
+        setLoading(true);
         const res = await fetch('/getReports', {
             method:'GET',
             headers:{
@@ -32,6 +34,7 @@ export function Reports(){
         //         result:"N.A"
         //     }
         // }
+        setLoading(false);
         setReports(data);
     }
     
@@ -45,7 +48,18 @@ export function Reports(){
             <div className="d-flex flex-row justify-content-center my-5">
                 <div className="card w-75" style={{width: "18rem"}}>
                     <div className="card-body" style={{height: "400px", overflowY: "auto"}}>
-                        <ReportsTable reports={reports}/>
+                    {loading ? (
+                        <div className="loader">
+                            <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                            </div>
+                            <p className="mx-1 my-1">Please wait.... loading reports data</p>
+                        </div>
+                            ):(
+                                <ReportsTable reports={reports}/>
+                            )
+                    }
+                        
                     </div>
                 </div>
             </div>
