@@ -80,6 +80,13 @@ router.post("/login", (req, res)=>{
 });
 
 
+router.get('/logout', (req, res)=>{
+  console.log("Logging out user....");
+  res.clearCookie("authToken", {path:'/'});
+  res.status(200).send("User Logged Out");
+})
+
+
 router.get('/about', authenticate, (req, res, next) => {
   res.send(req.currentUser);
 });

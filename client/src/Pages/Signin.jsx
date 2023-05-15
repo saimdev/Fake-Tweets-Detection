@@ -10,6 +10,7 @@ export function Signin() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
     // let name, value;
     // const handleUser = (e)=>{
@@ -20,6 +21,7 @@ export function Signin() {
 
     const loginUser = async (e)=>{
         e.preventDefault();
+        setLoading(true);
         const res = await fetch('/login', {
             method:'POST',
             headers:{
@@ -41,6 +43,7 @@ export function Signin() {
             window.alert("Successfully Logged IN");
             navigate('/');
         }
+        setLoading(false);
     }
 
     return (
@@ -67,7 +70,14 @@ export function Signin() {
                                 onChange={(e)=>setPassword(e.target.value)}
                                 />
                             </div>
-                            <input type="submit" onClick={loginUser} className="btn" style={{ background: "black", color: "white" }} value="Signin"/>
+                            {loading ? (
+
+                                    <input className="btn" style={{ background: "lightgrey", color: "black", borderColor:"lightgrey" }} value="Signing in...." disabled/>
+                                    ):(
+                                        <input type="submit" onClick={loginUser} className="btn" style={{ background: "black", color: "white" }} value="Signin"/>
+                                    )
+                            }
+                            
                         </form>
                         <p className="m-3">Create new account: <a href="/register" className="text-reset">Signup here</a></p>
                     </div>

@@ -5,6 +5,7 @@ import { Reports } from './Pages/Reports';
 import { Register } from './Pages/Register';
 import { Signin } from './Pages/Signin';
 import { Profile } from './Pages/Profile';
+import { Signout } from './Pages/Signout';
 import { BrowserRouter,Routes,Route } from "react-router-dom";
 import { HowToUse } from './Pages/HowToUse';
 
@@ -36,6 +37,9 @@ function App() {
           />
           <Route element={[<Register />]}
             path="/register"
+          />
+          <Route element={[<Signout />]}
+            path="/signout"
           />
         </Routes>
       </BrowserRouter>
